@@ -21,7 +21,7 @@
       <div class="detail-row">
         <span>User Type</span>
         <span class="badge {{ request.user.user_type }}">
-          {{ request.user.user_type|upper }}
+          {{ request.user.profile.user_type|upper }}
         </span>
       </div>
 
@@ -51,7 +51,7 @@
         Edit Profile
       </a>
 
-      {% if request.user.user_type == "free" %}
+      {% if request.user.profile.user_type == "free" %}
       <a href="/accounts/pro" class="btn upgrade">
         Upgrade to Pro
       </a>
