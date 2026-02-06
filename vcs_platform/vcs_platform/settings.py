@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'resumes',
     'chatbot',
     'training',
-    
+    'cloudinary',
+    'cloudinary_storage',
     'crispy_bootstrap4', 
      'rest_framework',
 ]
@@ -172,6 +173,20 @@ LOGOUT_REDIRECT_URL = 'dashboard'
 # MEDIA FILES
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+import os
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get("CLOUDINARY_dzm00tyyo"),
+    'API_KEY': os.environ.get("CLOUDINARY_241398399144346"),
+    'API_SECRET': os.environ.get("CLOUDINARY_iQiXEDWCOuyelBor6PR6b6foIdM"),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL = '/media/'
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
