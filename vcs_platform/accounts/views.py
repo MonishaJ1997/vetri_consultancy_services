@@ -97,31 +97,31 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from .models import Plan, Subscription
 
+
+    
 @login_required
 def payment_page(request):
-    # Get the Pro plan
     plan = Plan.objects.filter(plan_type='pro').first()
     if not plan:
         messages.error(request, "Pro Plan is not available.")
         return redirect('services')
 
     if request.method == "POST":
-        # Get or create subscription
         subscription, created = Subscription.objects.get_or_create(user=request.user)
-        
-        # Update subscription details
+
         subscription.amount_paid = plan.price
         subscription.payment_status = True
         subscription.save()
 
-        if created:
-            messages.success(request, "Payment successful! You are now subscribed.")
-        else:
-            messages.success(request, "Subscription updated successfully!")
+        # 🔥 UPGRADE USER TO PRO
+        request.user.profile.user_type = "pro"
+        request.user.profile.save()
 
+        messages.success(request, "Payment successful! You are now a Pro user.")
         return redirect('payment_success')
 
     return render(request, 'accounts/payment.html', {'plan': plan})
+
 
 @login_required
 def payment_success(request):
